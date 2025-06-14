@@ -187,15 +187,15 @@ const Home = () => (
       <ConsoleText text="Welcome, Operator. Choose your path in the fractal." />
     </div>
     <h1 class="text-4xl mb-8 font-pixel text-entropy drop-shadow whisper">Conscious System Entry</h1>
-    <div class="flex flex-wrap gap-8 justify-center w-full max-w-lg flex-col sm:flex-row">
-      <Link href="/blog"><div class="glass nav-animated hover-glow p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-mystic flex items-center gap-2">☉ <span>Thought Synthesis</span></div></Link>
-      <Link href="/projects"><div class="glass nav-animated p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-bytegreen flex items-center gap-2">⌬ <span>Constructs</span></div></Link>
-      <Link href="/about"><div class="glass nav-animated p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-amber flex items-center gap-2">☾ <span>White Half Moon</span></div></Link>
-      <Link href="/contact"><div class="glass nav-animated p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-entropy flex items-center gap-2">| <span>Signal Pipe</span></div></Link>
+    <div class="flex flex-wrap gap-8 justify-center w-full max-w-lg flex-col sm:flex-row mt-4 mb-8">
+      <Link href="/blog"><div class="glass nav-animated hover:shadow-lg p-8 rounded-lg cursor-pointer hover:scale-105 transition font-elegant border-2 border-mystic flex items-center gap-2 min-h-[44px] min-w-[44px]">☉ <span>Thought Synthesis</span></div></Link>
+      <Link href="/projects"><div class="glass nav-animated hover:shadow-lg p-8 rounded-lg cursor-pointer hover:scale-105 transition font-elegant border-2 border-bytegreen flex items-center gap-2 min-h-[44px] min-w-[44px]">⌬ <span>Constructs</span></div></Link>
+      <Link href="/about"><div class="glass nav-animated hover:shadow-lg p-8 rounded-lg cursor-pointer hover:scale-105 transition font-elegant border-2 border-amber flex items-center gap-2 min-h-[44px] min-w-[44px]">☾ <span>White Half Moon</span></div></Link>
+      <Link href="/contact"><div class="glass nav-animated hover:shadow-lg p-8 rounded-lg cursor-pointer hover:scale-105 transition font-elegant border-2 border-entropy flex items-center gap-2 min-h-[44px] min-w-[44px]">| <span>Signal Pipe</span></div></Link>
     </div>
     <div class="mt-12 flex justify-center">
       {/* Sacred Geometry SVG: Seed of Life motif */}
-      <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life">
+      <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto drop-shadow-lg" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life">
         <circle cx="60" cy="30" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
         <circle cx="60" cy="90" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
         <circle cx="30" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
@@ -213,6 +213,10 @@ const Blog = () => {
   const posts = usePosts();
   const { search, setSearch, tag, setTag, page, setPage, totalPages, paginated, filtered } = useSearchAndPagination(posts);
   const allTags = Array.from(new Set(posts.flatMap(p => normalizeTags(p.tags))));
+  // Tag chunking for Miller's/Hick's Law
+  const visibleTags = allTags.slice(0, 7);
+  const moreTags = allTags.slice(7);
+  const [showMoreTags, setShowMoreTags] = useState(false);
   return (
     <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
       <Reveal>
@@ -229,17 +233,30 @@ const Blog = () => {
             onInput={e => setSearch(e.target.value)}
             aria-label="Search posts"
           />
-          <select
-            class="p-3 rounded font-pixel border border-mystic focus:border-entropy text-base"
-            value={tag}
-            onChange={e => setTag(e.target.value)}
-            aria-label="Filter by tag"
-          >
-            <option value="">All Tags</option>
-            {allTags.map(t => (
-              <option value={t} key={t}>{t}</option>
-            ))}
-          </select>
+          <div class="relative">
+            <select
+              class="p-3 rounded font-pixel border border-mystic focus:border-entropy text-base"
+              value={tag}
+              onChange={e => setTag(e.target.value)}
+              aria-label="Filter by tag"
+            >
+              <option value="">All Tags</option>
+              {visibleTags.map(t => (
+                <option value={t} key={t}>{t}</option>
+              ))}
+              {showMoreTags && moreTags.map(t => (
+                <option value={t} key={t}>{t}</option>
+              ))}
+            </select>
+            {moreTags.length > 0 && !showMoreTags && (
+              <button
+                class="absolute right-2 top-2 text-xs text-bytegreen underline font-pixel bg-white bg-opacity-80 px-2 py-1 rounded"
+                type="button"
+                onClick={() => setShowMoreTags(true)}
+                tabIndex={0}
+              >More…</button>
+            )}
+          </div>
         </div>
         <div class="flex flex-col gap-4 w-full max-w-lg">
           {paginated.length === 0 ? (
@@ -259,7 +276,7 @@ const Blog = () => {
                 <div class="text-sm text-graphite">{post.description}</div>
                 <div class="flex gap-2 mt-2 flex-wrap">
                   {normalizeTags(post.tags).map(tag => (
-                    <span class="px-2 py-0.5 rounded text-xs bg-bytegreen text-beige font-pixel transition hover:bg-amber hover:text-graphite focus:bg-amber focus:text-graphite outline-none" tabIndex="0" key={tag}>{tag}</span>
+                    <span class="px-3 py-1 rounded-lg text-xs bg-bytegreen text-beige font-pixel transition hover:bg-amber hover:text-graphite focus:bg-amber focus:text-graphite outline-none min-h-[32px] min-w-[44px]" tabIndex="0" key={tag}>{tag}</span>
                   ))}
                 </div>
               </div>
@@ -269,12 +286,12 @@ const Blog = () => {
         {/* Pagination controls */}
         {totalPages > 1 && (
           <div class="flex gap-2 mt-6 flex-col sm:flex-row items-center">
-            <button class="px-4 py-2 rounded font-pixel border border-mystic text-base" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
+            <button class="px-6 py-3 rounded-lg font-pixel border border-mystic text-base min-h-[44px] min-w-[44px]" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
             <span class="font-pixel">Page {page} of {totalPages}</span>
-            <button class="px-4 py-2 rounded font-pixel border border-mystic text-base" disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
+            <button class="px-6 py-3 rounded-lg font-pixel border border-mystic text-base min-h-[44px] min-w-[44px]" disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
           </div>
         )}
-        <Link href="/" class="mt-8 text-bytegreen font-elegant hover:underline focus:underline transition outline-none">← Back to System Entry</Link>
+        <Link href="/" class="mt-10 text-entropy font-elegant hover:underline focus:underline transition outline-none text-lg px-4 py-2 rounded-lg border-2 border-entropy bg-beige shadow-lg inline-block">← Back to System Entry</Link>
       </Reveal>
     </div>
   );
@@ -311,7 +328,7 @@ const BlogPost = () => {
         {post.slug === 'pixel-systems-design' && <PixelGridDemo />}
         {post.slug === 'agent-garden-architecture' && <AgentGardenDemo />}
         {post.slug === 'white-half-moon' && <FireFunctionDemo />}
-        <Link href="/blog" class="mt-8 text-bytegreen font-elegant hover:underline">← Back to Thought Synthesis</Link>
+        <Link href="/blog" class="mt-10 text-bytegreen font-elegant hover:underline focus:underline transition outline-none text-lg px-4 py-2 rounded-lg border-2 border-bytegreen bg-beige shadow-lg inline-block">← Back to Thought Synthesis</Link>
       </Reveal>
     </div>
   );
@@ -335,7 +352,7 @@ const Projects = () => (
           </div>
         ))}
       </div>
-      <Link href="/" class="mt-8 text-mystic font-elegant hover:underline">← Back to System Entry</Link>
+      <Link href="/" class="mt-10 text-entropy font-elegant hover:underline focus:underline transition outline-none text-lg px-4 py-2 rounded-lg border-2 border-entropy bg-beige shadow-lg inline-block">← Back to System Entry</Link>
     </Reveal>
   </div>
 );
@@ -346,12 +363,12 @@ const About = () => {
   return (
     <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
       <Reveal>
-        <h2 class="section-header text-3xl mt-8 mb-2 font-pixel whisper">{post?.title || 'White Half Moon'}
+        <h2 class="section-header text-3xl mt-8 mb-6 font-pixel whisper">{post?.title || 'White Half Moon'}
           <span class="section-header-underline"></span>
         </h2>
-        <div class="flex justify-center my-6">
+        <div class="flex justify-center my-10">
           {/* Sacred Geometry SVG: Seed of Life motif */}
-          <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life">
+          <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto drop-shadow-lg" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life" role="img" focusable="false" tabIndex="-1">
             <circle cx="60" cy="30" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
             <circle cx="60" cy="90" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
             <circle cx="30" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
@@ -363,9 +380,11 @@ const About = () => {
           </svg>
         </div>
         {post && (
-          <article class="glass p-6 rounded max-w-xl w-full font-elegant border-2 border-mystic prose prose-invert prose-sm overflow-x-auto"
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }} />
+          <article class="glass p-6 rounded max-w-xl w-full font-elegant border-2 border-mystic prose prose-invert prose-sm overflow-x-auto space-y-8">
+            <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }} />
+          </article>
         )}
+        <Link href="/" class="mt-10 text-entropy font-elegant hover:underline focus:underline transition outline-none text-lg px-4 py-2 rounded-lg border-2 border-entropy bg-beige shadow-lg inline-block">← Back to System Entry</Link>
       </Reveal>
     </div>
   );
@@ -390,7 +409,7 @@ const Contact = () => {
             <button class="glass p-2 rounded font-pixel hover:scale-105 transition bg-entropy text-beige hover:bg-amber hover:text-graphite border border-entropy hover:glow" type="submit" aria-label="Send message">Transmit</button>
           </form>
         )}
-        <Link href="/" class="mt-8 text-mystic font-elegant hover:underline">← Back to System Entry</Link>
+        <Link href="/" class="mt-10 text-entropy font-elegant hover:underline focus:underline transition outline-none text-lg px-4 py-2 rounded-lg border-2 border-entropy bg-beige shadow-lg inline-block">← Back to System Entry</Link>
       </Reveal>
     </div>
   );
@@ -402,7 +421,7 @@ const NotFound = () => (
     <h2 class="section-header text-4xl font-pixel mb-4">404: Lost in the Fractal
       <span class="section-header-underline"></span>
     </h2>
-    <p class="mb-6">This path leads nowhere. Return to the <Link href="/">system entry</Link>.</p>
+    <p class="mb-6">This path leads nowhere. Return to the <Link href="/" class="text-entropy font-elegant hover:underline focus:underline transition outline-none text-lg px-4 py-2 rounded-lg border-2 border-entropy bg-beige shadow-lg inline-block">system entry</Link>.</p>
   </div>
 );
 
@@ -637,6 +656,14 @@ useEffect(() => {
 // Add FireFunctionDemo component
 function FireFunctionDemo() {
   const [identity, setIdentity] = useState('White Half Moon');
+  const [highlight, setHighlight] = useState(false);
+  useEffect(() => {
+    if (identity) {
+      setHighlight(true);
+      const timeout = setTimeout(() => setHighlight(false), 400);
+      return () => clearTimeout(timeout);
+    }
+  }, [identity]);
   return (
     <div className="my-8 flex flex-col items-center">
       <h3 className="font-pixel text-mystic mb-2">Live Fire Function Demo</h3>
@@ -651,7 +678,7 @@ function FireFunctionDemo() {
           aria-label="Identity"
         />
       </label>
-      <div className="mt-4 font-pixel text-lg text-amber bg-frost px-4 py-2 rounded border border-mystic">
+      <div className={`mt-4 font-pixel text-lg text-amber bg-frost px-6 py-3 rounded-lg border-2 border-entropy shadow-lg transition-all duration-300 ${highlight ? 'ring-4 ring-amber/40' : ''}`}>
         {identity ? `${identity} burns with purpose.` : '...'}
       </div>
     </div>
