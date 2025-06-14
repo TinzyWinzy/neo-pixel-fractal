@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-pixel bg-frost text-graphite;
+}
+
+.glass {
+  @apply bg-white bg-opacity-60 backdrop-blur-md shadow-glass;
+}
+
+.noise-bg {
+  @apply bg-noise;
+}
+
+.parallax-bg {
+  background: linear-gradient(180deg, #c8e0f4 0%, #f5f0e6 100%);
+  background-attachment: fixed;
+}
+
+.animated-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(120deg, #171c2d 0%, #0f4c5c 40%, #2a363b 70%, #fbbf24 100%);
+  background-size: 200% 200%;
+  animation: bg-move 16s ease-in-out infinite alternate;
+}
+@keyframes bg-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@layer utilities {
+  .whisper {
+    animation: whisper 2.5s cubic-bezier(0.4,0,0.2,1) both;
+  }
+  @keyframes whisper {
+    0% { opacity: 0; transform: translateX(-12px); }
+    60% { opacity: 1; transform: translateX(4px); }
+    80% { transform: translateX(-2px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  .glow {
+    box-shadow: 0 0 8px 2px #c8e0f4, 0 0 24px 4px #7755aa33;
+  }
+  .pixel-shadow {
+    box-shadow: 0 0 0 2px #1e1e1e, 2px 2px 0 0 #e95e5e;
+  }
+  .blink-cursor {
+    animation: blink-cursor 1s steps(2, start) infinite;
+  }
+  @keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+.custom-blockquote {
+  @apply border-l-4 border-mystic pl-4 italic text-mystic bg-mystic bg-opacity-10 rounded my-4 py-2;
+}
+.custom-code {
+  @apply bg-entropy bg-opacity-10 text-entropy font-mono rounded p-2 my-2 overflow-x-auto text-sm;
+}
+.custom-img {
+  @apply rounded shadow-glass my-4 max-w-full mx-auto block;
+}
+
+.pixel-box {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #7755aa;
+  margin: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f0e6;
+  box-shadow: 0 0 8px 2px #c8e0f433;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.pulse {
+  animation: pulse 1.2s infinite alternate cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 8px 2px #c8e0f433, 0 0 0 0 #7755aa44; }
+  100% { box-shadow: 0 0 16px 6px #c8e0f488, 0 0 0 8px #7755aa22; }
+}
+
+:root {
+  --teal: #0f4c5c;
+  --black: #171c2d;
+  --dark-gray: #2a363b;
+  --yellow: #fbbf24;
+}
+
+.nav-animated {
+  background: var(--black);
+  color: var(--yellow);
+  border: 2px solid var(--teal);
+  box-shadow: 0 0 0 0 var(--teal);
+  transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+  position: relative;
+}
+.nav-animated:hover, .nav-animated:focus {
+  background: var(--teal);
+  color: var(--yellow);
+  box-shadow: 0 0 16px 4px var(--teal), 0 0 0 4px var(--yellow);
+  z-index: 1;
+}
+
+.section-header {
+  color: var(--teal);
+  background: linear-gradient(90deg, var(--black) 0%, var(--teal) 100%);
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.section-header-underline {
+  display: block;
+  height: 4px;
+  width: 0;
+  background: var(--yellow);
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  position: absolute;
+  left: 0; bottom: 0;
+}
+.section-header:hover .section-header-underline,
+.section-header:focus .section-header-underline {
+  width: 100%;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
+  will-change: opacity, transform;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.code-highlight {
+  background: linear-gradient(90deg, #fbbf24 0%, #fffbe6 100%);
+  animation: code-glow 1.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+@keyframes code-glow {
+  0% { box-shadow: 0 0 0 0 #fbbf2444; }
+  60% { box-shadow: 0 0 16px 4px #fbbf24cc; }
+  100% { box-shadow: 0 0 0 0 #fbbf2400; }
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 120%;
+  transform: translateX(-50%);
+  background: #171c2d;
+  color: #fbbf24;
+  padding: 0.4em 0.8em;
+  border-radius: 6px;
+  font-size: 0.9em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+.has-tooltip:hover .tooltip, .has-tooltip:focus .tooltip {
+  opacity: 1;
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+.hover-glow:hover, .hover-glow:focus {
+  box-shadow: 0 0 12px 2px #0f4c5c, 0 0 0 4px #fbbf24;
+  border-color: #fbbf24;
+}

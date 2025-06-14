@@ -1,0 +1,32 @@
+{
+  "name": "one-shot",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "alias": {
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.1",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "3.4.3",
+    "vite": "^6.3.5",
+    "vitest": "^1.5.0"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "marked": "^15.0.12",
+    "preact": "^10.26.8",
+    "wouter": "^3.7.1",
+    "express": "^4.19.2",
+    "body-parser": "^1.20.2"
+  }
+}
