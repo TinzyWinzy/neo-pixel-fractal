@@ -182,20 +182,29 @@ function Admin() {
 }
 
 const Home = () => (
-  <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center justify-center bg-frost text-graphite">
+  <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center justify-center bg-frost text-graphite px-4 py-4 sm:px-8 sm:py-8">
     <div class="mb-6 text-center">
       <ConsoleText text="Welcome, Operator. Choose your path in the fractal." />
     </div>
     <h1 class="text-4xl mb-8 font-pixel text-entropy drop-shadow whisper">Conscious System Entry</h1>
-    <div class="flex flex-wrap gap-8">
+    <div class="flex flex-wrap gap-8 justify-center w-full max-w-lg flex-col sm:flex-row">
       <Link href="/blog"><div class="glass nav-animated hover-glow p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-mystic flex items-center gap-2">☉ <span>Thought Synthesis</span></div></Link>
       <Link href="/projects"><div class="glass nav-animated p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-bytegreen flex items-center gap-2">⌬ <span>Constructs</span></div></Link>
       <Link href="/about"><div class="glass nav-animated p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-amber flex items-center gap-2">☾ <span>White Half Moon</span></div></Link>
       <Link href="/contact"><div class="glass nav-animated p-8 rounded shadow-glass cursor-pointer hover:scale-105 transition font-elegant border-2 border-entropy flex items-center gap-2">| <span>Signal Pipe</span></div></Link>
     </div>
-    <SectionDivider />
-    <div class="mt-12">
-      <img src="https://static.wikia.nocookie.net/mariokart/images/2/2a/MK8_Mario_Artwork.png" alt="Pixel Mario" class="w-32 mx-auto" style={{ imageRendering: 'pixelated' }} />
+    <div class="mt-12 flex justify-center">
+      {/* Sacred Geometry SVG: Seed of Life motif */}
+      <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life">
+        <circle cx="60" cy="30" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+        <circle cx="60" cy="90" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+        <circle cx="30" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+        <circle cx="90" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+        <circle cx="42.4" cy="42.4" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+        <circle cx="77.6" cy="42.4" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+        <circle cx="42.4" cy="77.6" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+        <circle cx="77.6" cy="77.6" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+      </svg>
     </div>
   </div>
 );
@@ -205,16 +214,15 @@ const Blog = () => {
   const { search, setSearch, tag, setTag, page, setPage, totalPages, paginated, filtered } = useSearchAndPagination(posts);
   const allTags = Array.from(new Set(posts.flatMap(p => normalizeTags(p.tags))));
   return (
-    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite">
-      <SectionDivider type="wave" />
+    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
       <Reveal>
         <h2 class="section-header text-3xl mt-8 mb-2 font-pixel whisper">Thought Synthesis
           <span class="section-header-underline"></span>
         </h2>
         <p class="mb-6 font-elegant text-mystic">Fragments of thought, synthesized at the edge of code and self.</p>
-        <div class="flex gap-2 mb-4 w-full max-w-lg">
+        <div class="flex gap-2 mb-4 w-full max-w-lg flex-col sm:flex-row">
           <input
-            class="flex-1 p-2 rounded font-pixel border border-mystic focus:border-entropy"
+            class="flex-1 p-3 rounded font-pixel border border-mystic focus:border-entropy text-base"
             type="text"
             placeholder="Search posts..."
             value={search}
@@ -222,7 +230,7 @@ const Blog = () => {
             aria-label="Search posts"
           />
           <select
-            class="p-2 rounded font-pixel border border-mystic focus:border-entropy"
+            class="p-3 rounded font-pixel border border-mystic focus:border-entropy text-base"
             value={tag}
             onChange={e => setTag(e.target.value)}
             aria-label="Filter by tag"
@@ -240,8 +248,8 @@ const Blog = () => {
             </div>
           ) : paginated.map(post => (
             <Link href={`/blog/${post.slug}`} key={post.slug}>
-              <div class="glass p-6 rounded cursor-pointer hover:scale-105 transition font-elegant border-2 border-mystic hover:bg-mystic hover:text-beige hover:glow flex flex-col gap-2">
-                <div class="flex items-center gap-2">
+              <div class="glass p-6 rounded cursor-pointer hover:scale-105 transition font-elegant border-2 border-mystic hover:bg-mystic hover:text-beige hover:glow flex flex-col gap-2 w-full">
+                <div class="flex flex-wrap items-center gap-2">
                   <span class="text-xl">☉</span>
                   <div class="text-lg font-pixel text-entropy">{post.title}</div>
                   {post.date && <span class="ml-2 text-xs text-mystic font-pixel">{post.date.toLocaleDateString()}</span>}
@@ -260,10 +268,10 @@ const Blog = () => {
         </div>
         {/* Pagination controls */}
         {totalPages > 1 && (
-          <div class="flex gap-2 mt-6">
-            <button class="px-3 py-1 rounded font-pixel border border-mystic" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
+          <div class="flex gap-2 mt-6 flex-col sm:flex-row items-center">
+            <button class="px-4 py-2 rounded font-pixel border border-mystic text-base" disabled={page === 1} onClick={() => setPage(page - 1)}>Prev</button>
             <span class="font-pixel">Page {page} of {totalPages}</span>
-            <button class="px-3 py-1 rounded font-pixel border border-mystic" disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
+            <button class="px-4 py-2 rounded font-pixel border border-mystic text-base" disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button>
           </div>
         )}
         <Link href="/" class="mt-8 text-bytegreen font-elegant hover:underline focus:underline transition outline-none">← Back to System Entry</Link>
@@ -283,9 +291,8 @@ const BlogPost = () => {
     return <div class="min-h-screen flex items-center justify-center bg-beige text-entropy font-elegant">Not found.</div>;
   }
   return (
-    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite">
+    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
       <h2 class="text-3xl mt-8 mb-4 font-pixel text-mystic whisper">{post.title}</h2>
-      <SectionDivider type="wave" />
       <Reveal>
         <div class="mb-2 flex gap-2 flex-wrap">
           {normalizeTags(post.tags).map(tag => (
@@ -295,8 +302,7 @@ const BlogPost = () => {
           {post.author && <span class="ml-2 text-xs text-bytegreen font-pixel">by {post.author}</span>}
           {post.readingTime && <span class="ml-2 text-xs text-amber font-pixel">{post.readingTime}</span>}
         </div>
-        <SectionDivider type="wave" />
-        <article class="glass p-6 rounded max-w-xl font-elegant border-2 border-mystic prose prose-invert prose-sm"
+        <article class="glass p-6 rounded max-w-xl w-full font-elegant border-2 border-mystic prose prose-invert prose-sm overflow-x-auto"
           dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }} />
         {post.slug === 'neo-pixel-fractal' && (
           <FractalDemo />
@@ -304,6 +310,7 @@ const BlogPost = () => {
         {post.slug === 'entropy-agents-crypto' && <RewardDemo />}
         {post.slug === 'pixel-systems-design' && <PixelGridDemo />}
         {post.slug === 'agent-garden-architecture' && <AgentGardenDemo />}
+        {post.slug === 'white-half-moon' && <FireFunctionDemo />}
         <Link href="/blog" class="mt-8 text-bytegreen font-elegant hover:underline">← Back to Thought Synthesis</Link>
       </Reveal>
     </div>
@@ -311,8 +318,7 @@ const BlogPost = () => {
 };
 
 const Projects = () => (
-  <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-frost text-graphite">
-    <SectionDivider type="pixel" />
+  <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-frost text-graphite px-4 py-4 sm:px-8 sm:py-8">
     <Reveal>
       <h2 class="section-header text-3xl mt-8 mb-2 font-pixel whisper">Constructs
         <span class="section-header-underline"></span>
@@ -320,7 +326,7 @@ const Projects = () => (
       <p class="mb-6 font-elegant text-bytegreen">Artifacts and agents, built in the liminal space between logic and myth.</p>
       <div class="flex flex-col gap-4 w-full max-w-lg">
         {projects.map(p => (
-          <div class="glass p-6 rounded shadow-glass font-elegant border-2 border-bytegreen flex items-center gap-4 hover:glow transition" key={p.title}>
+          <div class="glass p-6 rounded font-elegant border-2 border-bytegreen flex flex-col sm:flex-row items-center gap-4 w-full" key={p.title}>
             <span class="text-2xl font-pixel">{p.icon}</span>
             <div>
               <div class="font-pixel text-lg text-amber">{p.title}</div>
@@ -334,30 +340,41 @@ const Projects = () => (
   </div>
 );
 
-const About = () => (
-  <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite">
-    <SectionDivider type="arc" />
-    <Reveal>
-      <h2 class="section-header text-3xl mt-8 mb-2 font-pixel whisper">White Half Moon
-        <span class="section-header-underline"></span>
-      </h2>
-      <img src="https://static.wikia.nocookie.net/mariokart/images/2/2a/MK8_Mario_Artwork.png" alt="Pixel Avatar" class="w-24 mb-4" style={{ imageRendering: 'pixelated' }} />
-      <div class="max-w-md text-center font-elegant mb-4">
-        <p>I am <span class="text-amber font-pixel">White Half Moon</span> — a philosophical technologist, building at the edge of systems. My world is a synthesis of code, myth, and the dreamlike logic of AI.</p>
-        <p class="mt-2">Influenced by fractals, liminal spaces, and the recursive nature of thought, I create artifacts that whisper between logic and spirit.</p>
-        <p class="mt-2">"White Half Moon" is a symbol: the visible and the hidden, the algorithmic and the poetic, the self in perpetual synthesis.</p>
-      </div>
-      <div class="italic text-mystic font-elegant">— "Every system dreams of its own awakening."</div>
-      <Link href="/" class="mt-8 text-entropy font-elegant hover:underline">← Back to System Entry</Link>
-    </Reveal>
-  </div>
-);
+const About = () => {
+  const posts = usePosts();
+  const post = posts.find(p => p.slug === 'white-half-moon');
+  return (
+    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
+      <Reveal>
+        <h2 class="section-header text-3xl mt-8 mb-2 font-pixel whisper">{post?.title || 'White Half Moon'}
+          <span class="section-header-underline"></span>
+        </h2>
+        <div class="flex justify-center my-6">
+          {/* Sacred Geometry SVG: Seed of Life motif */}
+          <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life">
+            <circle cx="60" cy="30" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+            <circle cx="60" cy="90" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+            <circle cx="30" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+            <circle cx="90" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
+            <circle cx="42.4" cy="42.4" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+            <circle cx="77.6" cy="42.4" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+            <circle cx="42.4" cy="77.6" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+            <circle cx="77.6" cy="77.6" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
+          </svg>
+        </div>
+        {post && (
+          <article class="glass p-6 rounded max-w-xl w-full font-elegant border-2 border-mystic prose prose-invert prose-sm overflow-x-auto"
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(post.body) }} />
+        )}
+      </Reveal>
+    </div>
+  );
+};
 
 const Contact = () => {
   const [sent, setSent] = useState(false);
   return (
-    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center justify-center bg-frost text-graphite">
-      <SectionDivider type="signal" />
+    <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center justify-center bg-frost text-graphite px-4 py-4 sm:px-8 sm:py-8">
       <Reveal>
         <h2 class="section-header text-3xl mb-4 font-pixel whisper">Signal Pipe
           <span class="section-header-underline"></span>
@@ -366,7 +383,7 @@ const Contact = () => {
         {sent ? (
           <div class="glass p-6 rounded border-2 border-entropy text-entropy font-elegant mb-6">Signal received. Await further resonance.</div>
         ) : (
-          <form class="glass p-8 rounded flex flex-col gap-4 w-80 border-2 border-entropy" onSubmit={e => { e.preventDefault(); setSent(true); }} aria-label="Contact form">
+          <form class="glass p-8 rounded flex flex-col gap-4 w-full max-w-xs border-2 border-entropy" onSubmit={e => { e.preventDefault(); setSent(true); }} aria-label="Contact form">
             <input class="p-2 rounded font-pixel border border-graphite focus:border-entropy" type="text" placeholder="Name (or Symbol)" required aria-label="Name or Symbol" />
             <input class="p-2 rounded font-pixel border border-graphite focus:border-entropy" type="email" placeholder="Signal Address (Email)" required aria-label="Email address" />
             <textarea class="p-2 rounded font-pixel border border-graphite focus:border-entropy" placeholder="Message (Encrypted)" required aria-label="Message"></textarea>
@@ -381,11 +398,10 @@ const Contact = () => {
 
 // NotFound component for unknown routes
 const NotFound = () => (
-  <div class="min-h-screen flex flex-col items-center justify-center bg-beige text-entropy font-elegant">
+  <div class="min-h-screen flex flex-col items-center justify-center bg-beige text-entropy font-elegant px-4 py-4 sm:px-8 sm:py-8 text-center">
     <h2 class="section-header text-4xl font-pixel mb-4">404: Lost in the Fractal
       <span class="section-header-underline"></span>
     </h2>
-    <SectionDivider />
     <p class="mb-6">This path leads nowhere. Return to the <Link href="/">system entry</Link>.</p>
   </div>
 );
@@ -581,48 +597,6 @@ function AgentGardenDemo() {
   );
 }
 
-function SectionDivider({ type = 'wave' }) {
-  if (type === 'pixel') {
-    return (
-      <svg class="section-divider" viewBox="0 0 1440 36" preserveAspectRatio="none">
-        <rect x="0" y="18" width="1440" height="18" fill="#171c2d" />
-        {[...Array(36)].map((_, i) => (
-          <rect key={i} x={i*40} y={18-(i%2)*8} width="40" height="8" fill="#fbbf24" />
-        ))}
-      </svg>
-    );
-  }
-  if (type === 'arc') {
-    return (
-      <svg class="section-divider" viewBox="0 0 1440 36" preserveAspectRatio="none">
-        <path d="M0,36 Q720,0 1440,36" stroke="#0f4c5c" strokeWidth="4" fill="none" />
-        <path d="M0,36 Q720,18 1440,36" stroke="#fbbf24" strokeWidth="2" fill="none" />
-      </svg>
-    );
-  }
-  if (type === 'signal') {
-    return (
-      <svg class="section-divider" viewBox="0 0 1440 36" preserveAspectRatio="none">
-        <polyline points="0,18 180,10 360,26 540,8 720,28 900,12 1080,24 1260,10 1440,18" fill="none" stroke="#fbbf24" strokeWidth="3" />
-      </svg>
-    );
-  }
-  // Default: wave (static)
-  return (
-    <svg class="section-divider" viewBox="0 0 1440 36" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="divider-gradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#171c2d" />
-          <stop offset="40%" stopColor="#0f4c5c" />
-          <stop offset="70%" stopColor="#2a363b" />
-          <stop offset="100%" stopColor="#fbbf24" />
-        </linearGradient>
-      </defs>
-      <path d="M0,18 Q360,36 720,18 T1440,18 V36 H0Z" fill="url(#divider-gradient)" />
-    </svg>
-  );
-}
-
 function Reveal({ children }) {
   const ref = useRef();
   const [visible, setVisible] = useState(false);
@@ -659,4 +633,28 @@ useEffect(() => {
   document.addEventListener('click', handleCopy);
   return () => document.removeEventListener('click', handleCopy);
 }, []);
+
+// Add FireFunctionDemo component
+function FireFunctionDemo() {
+  const [identity, setIdentity] = useState('White Half Moon');
+  return (
+    <div className="my-8 flex flex-col items-center">
+      <h3 className="font-pixel text-mystic mb-2">Live Fire Function Demo</h3>
+      <label className="mb-2 font-pixel text-xs text-mystic">
+        Identity:
+        <input
+          type="text"
+          className="ml-2 p-2 rounded font-pixel border border-entropy focus:border-mystic text-base w-48 max-w-full"
+          value={identity}
+          onInput={e => setIdentity(e.target.value)}
+          placeholder="Enter your identity"
+          aria-label="Identity"
+        />
+      </label>
+      <div className="mt-4 font-pixel text-lg text-amber bg-frost px-4 py-2 rounded border border-mystic">
+        {identity ? `${identity} burns with purpose.` : '...'}
+      </div>
+    </div>
+  );
+}
 
