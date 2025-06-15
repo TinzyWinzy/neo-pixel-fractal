@@ -133,6 +133,39 @@ body {
   .overflow-x-auto {
     overflow-x: auto !important;
   }
+  /* Tag and pill styles */
+  .px-3, .px-2, .py-1, .py-0\.5 {
+    padding-left: 0.5em !important;
+    padding-right: 0.5em !important;
+    padding-top: 0.25em !important;
+    padding-bottom: 0.25em !important;
+    font-size: 0.85em !important;
+  }
+  .text-xs, .text-sm {
+    font-size: 0.85em !important;
+  }
+  .flex-wrap {
+    flex-wrap: wrap !important;
+  }
+  .pixel-box {
+    width: 28px !important;
+    height: 28px !important;
+    margin: 3px !important;
+  }
+  .custom-code, .code-highlight {
+    font-size: 0.9em !important;
+    padding: 0.5em !important;
+  }
+  svg, .drop-shadow-lg {
+    max-width: 90vw !important;
+    height: auto !important;
+  }
+  .btn {
+    font-size: 1em !important;
+    padding: 0.5em 1em !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
 }
 
 .custom-blockquote {

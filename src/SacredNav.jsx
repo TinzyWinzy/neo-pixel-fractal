@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import { useState } from 'preact/hooks';
 import { Link, useRoute } from 'wouter';
 import SacredGeometrySVG from './SacredGeometrySVG.jsx';
 import { useAuth } from './AuthContext.jsx';
@@ -15,44 +16,49 @@ export default function SacredNav() {
   const [match, params] = useRoute('/:section*');
   const current = window.location.pathname;
   const { isLoggedIn, userRole, login, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  // Combine nav links with conditional admin/dashboard
+  const fullLinks = [
+    ...navLinks,
+    ...(isLoggedIn ? [
+      { href: '/dashboard', label: 'Dashboard', icon: '⚙️' },
+      { href: '/admin', label: 'Admin', icon: '🛡️' },
+    ] : [])
+  ];
   return (
-    <nav class="fixed top-0 left-0 w-full z-50 bg-frost bg-opacity-90 border-b-2 border-mystic flex items-center justify-between px-4 py-2 shadow-lg"
+    <nav class="fixed top-0 left-0 w-full z-50 bg-frost bg-opacity-90 border-b-2 border-mystic flex items-center justify-between px-2 py-1 sm:px-4 sm:py-2 shadow-lg"
       role="navigation" aria-label="Main Navigation">
       <Link href="/" class="flex items-center gap-2 focus:outline-none">
-        <SacredGeometrySVG size={36} className="mr-2" />
-        <span class="font-pixel text-lg text-entropy">Vacili</span>
+        <SacredGeometrySVG size={28} className="mr-1 sm:mr-2" />
+        <span class="font-pixel text-base sm:text-lg text-entropy">Vacili</span>
       </Link>
-      <ul class="flex gap-2 sm:gap-4 items-center">
-        {navLinks.map(link => (
-          <li key={link.href}>
+      {/* Hamburger for mobile */}
+      <button class="sm:hidden ml-auto mr-2 p-2 rounded focus:outline-none" aria-label="Toggle menu" onClick={() => setOpen(o => !o)}>
+        <span class="text-2xl">☰</span>
+      </button>
+      {/* Nav links */}
+      <ul class={`fixed sm:static top-12 left-0 w-full sm:w-auto bg-frost bg-opacity-95 sm:bg-transparent flex-col sm:flex-row flex sm:flex gap-0 sm:gap-2 items-center transition-all duration-200 ${open ? 'flex' : 'hidden sm:flex'}`} style={{ boxShadow: open ? '0 2px 16px 0 var(--mystic)' : 'none' }}>
+        {fullLinks.map(link => (
+          <li key={link.href} class="w-full sm:w-auto">
             <Link
               href={link.href}
-              class={`px-3 py-2 rounded-lg font-pixel flex items-center gap-1 transition border-2 border-transparent hover:border-entropy hover:bg-mystic hover:text-beige focus:border-entropy focus:bg-mystic focus:text-beige ${current === link.href ? 'bg-entropy text-beige border-entropy' : 'text-graphite'}`}
+              class={`w-full sm:w-auto px-4 py-3 sm:px-3 sm:py-2 rounded-lg font-pixel flex items-center gap-1 transition border-2 border-transparent hover:border-entropy hover:bg-mystic hover:text-beige focus:border-entropy focus:bg-mystic focus:text-beige ${current === link.href ? 'bg-entropy text-beige border-entropy' : 'text-graphite'} text-lg sm:text-base`}
               aria-current={current === link.href ? 'page' : undefined}
+              onClick={() => setOpen(false)}
             >
-              <span class="text-xl">{link.icon}</span>
-              <span class="hidden sm:inline">{link.label}</span>
+              <span class="text-xl sm:text-lg">{link.icon}</span>
+              <span class="inline sm:inline">{link.label}</span>
             </Link>
           </li>
         ))}
-        {isLoggedIn && (
-          <>
-            <li>
-              <Link href="/dashboard" class={`px-3 py-2 rounded-lg font-pixel flex items-center gap-1 transition border-2 border-transparent hover:border-entropy hover:bg-mystic hover:text-beige focus:border-entropy focus:bg-mystic focus:text-beige ${current === '/dashboard' ? 'bg-entropy text-beige border-entropy' : 'text-graphite'}`}>⚙️ <span class="hidden sm:inline">Dashboard</span></Link>
-            </li>
-            <li>
-              <Link href="/admin" class={`px-3 py-2 rounded-lg font-pixel flex items-center gap-1 transition border-2 border-transparent hover:border-entropy hover:bg-mystic hover:text-beige focus:border-entropy focus:bg-mystic focus:text-beige ${current === '/admin' ? 'bg-entropy text-beige border-entropy' : 'text-graphite'}`}>🛡️ <span class="hidden sm:inline">Admin</span></Link>
-            </li>
-          </>
-        )}
+        <li class="w-full sm:w-auto flex justify-center">
+          {isLoggedIn ? (
+            <button class="btn ml-0 sm:ml-4 w-full sm:w-auto my-2 sm:my-0" onClick={() => { setOpen(false); logout(); }}>Logout</button>
+          ) : (
+            <button class="btn ml-0 sm:ml-4 w-full sm:w-auto my-2 sm:my-0" onClick={() => { setOpen(false); login('admin'); }}>Login</button>
+          )}
+        </li>
       </ul>
-      <div>
-        {isLoggedIn ? (
-          <button class="ml-4 px-3 py-1 rounded font-pixel bg-mystic text-graphite border border-mystic hover:bg-amber hover:text-graphite hover:border-amber" onClick={logout}>Logout</button>
-        ) : (
-          <button class="ml-4 px-3 py-1 rounded font-pixel bg-bytegreen text-beige border border-bytegreen hover:bg-amber hover:text-graphite hover:border-amber" onClick={() => login('admin')}>Login</button>
-        )}
-      </div>
     </nav>
   );
 } 
