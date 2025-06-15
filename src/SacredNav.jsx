@@ -26,18 +26,22 @@ export default function SacredNav() {
     ] : [])
   ];
   return (
-    <nav class="fixed top-0 left-0 w-full z-50 bg-frost bg-opacity-90 border-b-2 border-mystic flex items-center justify-between px-2 py-1 sm:px-4 sm:py-2 shadow-lg"
+    <nav class="fixed top-0 left-0 w-full z-50 bg-frost bg-opacity-60 border-b-2 border-mystic flex items-center justify-between px-2 py-1 sm:px-4 sm:py-2 shadow-lg"
       role="navigation" aria-label="Main Navigation">
       <Link href="/" class="flex items-center gap-2 focus:outline-none">
-        <SacredGeometrySVG size={28} className="mr-1 sm:mr-2" />
+        <SacredGeometrySVG size={24} className="mr-1 sm:mr-2" />
         <span class="font-pixel text-base sm:text-lg text-entropy">Vacili</span>
       </Link>
       {/* Hamburger for mobile */}
       <button class="sm:hidden ml-auto mr-2 p-2 rounded focus:outline-none" aria-label="Toggle menu" onClick={() => setOpen(o => !o)}>
         <span class="text-2xl">☰</span>
       </button>
+      {/* Mobile menu overlay/backdrop */}
+      {open && (
+        <div class="fixed inset-0 z-40 bg-graphite bg-opacity-40" onClick={() => setOpen(false)}></div>
+      )}
       {/* Nav links */}
-      <ul class={`fixed sm:static top-12 left-0 w-full sm:w-auto bg-frost bg-opacity-95 sm:bg-transparent flex-col sm:flex-row flex sm:flex gap-0 sm:gap-2 items-center transition-all duration-200 ${open ? 'flex' : 'hidden sm:flex'}`} style={{ boxShadow: open ? '0 2px 16px 0 var(--mystic)' : 'none' }}>
+      <ul class={`fixed sm:static top-12 left-0 w-full sm:w-auto bg-frost bg-opacity-95 sm:bg-transparent flex-col sm:flex-row flex sm:flex gap-0 sm:gap-2 items-center transition-all duration-200 z-50 ${open ? 'flex' : 'hidden sm:flex'}`} style={{ boxShadow: open ? '0 2px 16px 0 var(--mystic)' : 'none', maxHeight: open ? '80vh' : '0', overflowY: open ? 'auto' : 'visible' }}>
         {fullLinks.map(link => (
           <li key={link.href} class="w-full sm:w-auto">
             <Link
