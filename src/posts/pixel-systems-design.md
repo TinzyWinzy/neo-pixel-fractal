@@ -24,14 +24,22 @@ This post explores why I often design within the pixel grid — not as an act of
   The layout becomes a *visual algorithm*.
 
 - **Retro Logic**  
-  Simplicity is not regression. It’s clarity through constraint.  
+  Simplicity is not regression. It's clarity through constraint.  
   In retro UIs, the logic is transparent — what you see is what the system *is*. No illusion, no abstraction without necessity.
 
 ## Example: Pixel Grid System
 
-```css
-.pixel-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 2px;
-}
+<div class="font-elegant text-mystic mb-2">Edit and run the pixel grid CSS live below:</div>
+<LiveCode initial={`.pixel-grid {\n  display: grid;\n  grid-template-columns: repeat(8, 1fr);\n  gap: 2px;\n}\n\nrender(<div className=\"pixel-grid\">{Array.from({length: 64}).map((_,i) => <div key={i} style={{background:'#7755aa',height:24}} />)}</div>);`} height={120} />
+
+/* Pixel grid: Foundation for precise, retro UI systems. */
+.pixel-grid { /* ... */ }
+
+---
+
+## Related Patterns
+- [Neo-Pixel Fractal: My Design Philosophy](/blog/neo-pixel-fractal) — on fractal modularity and entropy.
+- [White Half Moon's Fire](/blog/white-half-moon) — on ritual and system clarity.
+
+## Ritual Invitation
+> Design a UI element using only this grid. Where does nostalgia end and precision begin?

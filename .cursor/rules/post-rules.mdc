@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+title: "{{title}}"
+date: {{date:YYYY-MM-DD}}
+tags: [fractal, sacred-geometry, identity]
+slug: "{{title:slug}}"
+description: "{{1-line overview}}"
+author: "White Half Moon"
+---
+
+# ⟐ {{title}} ⟐  
+*— a neo-pixel-fractal transmission —*
+
+> 📐 *"Insert guiding metaphor or quote."*
+
+## ✦ I. The Center Point // Origin Node
+{{describe core idea}}
+
+## ✦ II. The Vesica Piscis // Duality & Emergence
+{{reflect on opposing ideas and what emerges from them}}
+
+## ✦ III. The Triangle // Structure & Perspective
+- ⬡ {{point one}}
+- ⬡ {{point two}}
+- ⬡ {{point three}}
+
+## ✦ IV. The Spiral // Expansion & Reflection
+{{zoom out and explore ripple effects}}
+
+## ✦ V. The Portal // Exit Node
+{{parting insight, question, or invitation}}
+
+```txt
+{{closing invocation}}

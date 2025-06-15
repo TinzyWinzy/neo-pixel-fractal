@@ -57,3 +57,11 @@ function bloom(agent) {
 
 ---
 *“Every agent is a seed. The garden is the system. Let them bloom.”* 
+
+## Related Patterns
+- [Entropy-Aware Agents in Crypto Trading](/entropy-agents-crypto) — on holonic, adaptive agents.
+- [Neo-Pixel Fractal](/neo-pixel-fractal) — on modular, living design.
+- [White Half Moon's Fire](/white-half-moon) — on ritual and system identity.
+
+## Ritual Invitation
+> Plant a new agent in your own garden. What does it grow into? What does it connect to? 

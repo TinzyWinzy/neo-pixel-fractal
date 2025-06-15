@@ -36,7 +36,7 @@ Pixels offer constraints that *liberate intention*. A single misaligned pixel is
 Perfect symmetry is lifeless.  
 I introduce randomness and irregular rhythm deliberately — to echo *natural systems*, prevent visual fatigue, and imbue interfaces with personality.
 
-Entropy isn’t noise. It’s *texture*. It’s **digital breathing**.
+Entropy isn't noise. It's *texture*. It's **digital breathing**.
 
 ## Example: Fractal Component
 
@@ -49,3 +49,13 @@ function FractalBox({ depth }) {
     </div>
   );
 }
+
+```
+
+## Related Patterns
+- [Pixel Systems: Between Nostalgia & Precision](/blog/pixel-systems-design) — on pixel logic and memory coding.
+- [White Half Moon's Fire](/blog/white-half-moon) — on fractal identity and ritual.
+- [Agent Garden Architecture](/blog/agent-garden-architecture) — on modular, living systems.
+
+## Ritual Invitation
+> Build your own fractal component. How deep does your recursion go before the pattern breaks?

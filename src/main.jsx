@@ -3,6 +3,11 @@ import { useState, useEffect, useRef } from 'preact/hooks';
 import { Router, Route, Link, useRoute } from 'wouter';
 import { parseFrontmatter, renderMarkdown } from './utils.js';
 import './style.css';
+import SacredGeometrySVG from './SacredGeometrySVG.jsx';
+import SacredNav from './SacredNav.jsx';
+import Dashboard from './Dashboard.jsx';
+import LiveCode from './LiveCode.jsx';
+import { AuthProvider } from './AuthContext.jsx';
 
 // Dynamically import all markdown files in src/posts
 const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
@@ -309,7 +314,8 @@ const BlogPost = () => {
   }
   return (
     <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
-      <h2 class="text-3xl mt-8 mb-4 font-pixel text-mystic whisper">{post.title}</h2>
+      <div class="my-6"><SacredGeometrySVG size={80} /></div>
+      <h2 class="text-3xl mt-2 mb-4 font-pixel text-mystic whisper">{post.title}</h2>
       <Reveal>
         <div class="mb-2 flex gap-2 flex-wrap">
           {normalizeTags(post.tags).map(tag => (
@@ -426,16 +432,22 @@ const NotFound = () => (
 );
 
 const App = () => (
-  <Router>
-    <Route path="/" component={Home} />
-    <Route path="/blog" component={Blog} />
-    <Route path="/blog/:slug" component={BlogPost} />
-    <Route path="/projects" component={Projects} />
-    <Route path="/about" component={About} />
-    <Route path="/contact" component={Contact} />
-    <Route path="/admin" component={Admin} />
-    <Route component={NotFound} />
-  </Router>
+  <AuthProvider>
+    <SacredNav />
+    <div style={{ paddingTop: '64px' }}>
+      <Router>
+        <Route path="/" component={Home} />
+        <Route path="/blog" component={Blog} />
+        <Route path="/blog/:slug" component={BlogPost} />
+        <Route path="/projects" component={Projects} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/about" component={About} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/admin" component={Admin} />
+        <Route component={NotFound} />
+      </Router>
+    </div>
+  </AuthProvider>
 );
 
 render(<App />, document.getElementById('app'));

@@ -84,7 +84,7 @@ A symbol of purpose—distilled into logic.
 
 > See the live, dynamic version of the Fire Function in the app UI below. Enter your identity and watch it ignite with purpose.
 
-```js
+// Purpose ignition: Symbolic function for identity-driven action.
 function ignite(identity) {
   return `${identity} burns with purpose.`;
 }
@@ -92,3 +92,13 @@ function ignite(identity) {
 // Output:
 ignite("White Half Moon"); 
 // "White Half Moon burns with purpose."
+
+---
+
+## Related Patterns
+- [Neo-Pixel Fractal: My Design Philosophy](/neo-pixel-fractal) — on fractal identity in UI/code.
+- [Agent Garden Architecture: The New Stack](/agent-garden-architecture) — on holonic agents and ritual systems.
+- [Entropy-Aware Agents in Crypto Trading](/entropy-agents-crypto) — on adaptive identity and entropy.
+
+## Ritual Invitation
+> What mask do you wear in your own system? Fork this function—ignite your own ritual.
