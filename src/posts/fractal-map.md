@@ -7,6 +7,8 @@ tags: ["map", "fractal", "knowledge", "index", "navigation"]
 description: "A living map of the interconnected posts—visualizing the fractal, holonic, and entropic relationships in the garden."
 ---
 
+<!-- SacredGeometrySVG -->
+
 > "A garden is not a list. It is a living pattern—each node aware of its neighbors."
 
 ## Fractal Map: Knowledge Garden Overview

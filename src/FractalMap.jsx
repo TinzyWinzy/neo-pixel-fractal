@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { Link } from 'wouter';
-import { useState } from 'preact/hooks';
+import { useState, useRef } from 'preact/hooks';
 
 // Fractal map data (can be generated or fetched in future)
 const nodes = [
@@ -30,9 +30,73 @@ const nodePos = {
 
 export default function FractalMap() {
   const [hovered, setHovered] = useState(null);
+  const [view, setView] = useState({ x: 0, y: 0, scale: 1 });
+  const dragging = useRef(false);
+  const last = useRef({ x: 0, y: 0 });
+
+  // Pan handlers
+  function onMouseDown(e) {
+    dragging.current = true;
+    last.current = { x: e.clientX, y: e.clientY };
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  }
+  function onMouseMove(e) {
+    if (!dragging.current) return;
+    const dx = (e.clientX - last.current.x) / view.scale;
+    const dy = (e.clientY - last.current.y) / view.scale;
+    setView(v => ({ ...v, x: v.x - dx, y: v.y - dy }));
+    last.current = { x: e.clientX, y: e.clientY };
+  }
+  function onMouseUp() {
+    dragging.current = false;
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+  }
+  // Zoom handler
+  function onWheel(e) {
+    e.preventDefault();
+    const scale = Math.max(0.5, Math.min(2.5, view.scale * (e.deltaY < 0 ? 1.1 : 0.9)));
+    setView(v => ({ ...v, scale }));
+  }
+  // Touch support
+  function onTouchStart(e) {
+    if (e.touches.length === 1) {
+      dragging.current = true;
+      last.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  }
+  function onTouchMove(e) {
+    if (!dragging.current || e.touches.length !== 1) return;
+    const dx = (e.touches[0].clientX - last.current.x) / view.scale;
+    const dy = (e.touches[0].clientY - last.current.y) / view.scale;
+    setView(v => ({ ...v, x: v.x - dx, y: v.y - dy }));
+    last.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+  function onTouchEnd() {
+    dragging.current = false;
+  }
+  // ViewBox calculation
+  const vbX = view.x;
+  const vbY = view.y;
+  const vbW = 400 / view.scale;
+  const vbH = 400 / view.scale;
+
   return (
-    <div class="w-full flex flex-col items-center my-8">
-      <svg viewBox="0 0 400 400" width="100%" height="340" style={{ maxWidth: 480 }}>
+    <div class="w-full flex flex-col items-center my-8 select-none">
+      <svg
+        viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`}
+        width="100%"
+        height="340"
+        style={{ maxWidth: 480, touchAction: 'none', cursor: dragging.current ? 'grabbing' : 'grab' }}
+        onMouseDown={onMouseDown}
+        onWheel={onWheel}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        tabIndex={0}
+        aria-label="Fractal Knowledge Map"
+      >
         {/* Draw links */}
         {links.map((l, i) => (
           <line
@@ -88,7 +152,7 @@ export default function FractalMap() {
         ))}
       </svg>
       <div class="mt-4 text-mystic font-elegant text-center text-sm max-w-lg">
-        <b>Fractal Map:</b> Click a node to visit its post. Hover to see details. Lines show resonance.
+        <b>Fractal Map:</b> Click a node to visit its post. Hover to see details. Drag to pan. Scroll to zoom. Lines show resonance.
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import { Link, useRoute } from 'wouter';
 import SacredGeometrySVG from './SacredGeometrySVG.jsx';
 import { useAuth } from './AuthContext.jsx';
@@ -17,6 +17,11 @@ export default function SacredNav() {
   const current = window.location.pathname;
   const { isLoggedIn, userRole, login, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState('');
+  const [pass, setPass] = useState('');
+  const [error, setError] = useState('');
+  useEffect(() => { if (isLoggedIn) setShowLogin(false); }, [isLoggedIn]);
   // Combine nav links with conditional admin/dashboard
   const fullLinks = [
     ...navLinks,
@@ -59,10 +64,32 @@ export default function SacredNav() {
           {isLoggedIn ? (
             <button class="btn ml-0 sm:ml-4 w-full sm:w-auto my-2 sm:my-0" onClick={() => { setOpen(false); logout(); }}>Logout</button>
           ) : (
-            <button class="btn ml-0 sm:ml-4 w-full sm:w-auto my-2 sm:my-0" onClick={() => { setOpen(false); login('admin'); }}>Login</button>
+            <button class="btn ml-0 sm:ml-4 w-full sm:w-auto my-2 sm:my-0" onClick={() => { setOpen(false); setShowLogin(true); }}>Login</button>
           )}
         </li>
       </ul>
+      {showLogin && (
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-graphite bg-opacity-60">
+          <div class="glass p-8 rounded flex flex-col gap-4 w-80 border-2 border-entropy relative">
+            <button class="absolute top-2 right-2 text-entropy text-xl font-pixel" onClick={() => setShowLogin(false)} aria-label="Close">✕</button>
+            <h2 class="text-2xl mb-2 font-pixel text-entropy whisper">Login</h2>
+            <form onSubmit={e => {
+              e.preventDefault();
+              if (user === 'whitehalfmoon' && pass === 'changeme') {
+                login('admin');
+                setError('');
+              } else {
+                setError('Invalid credentials');
+              }
+            }} class="flex flex-col gap-3">
+              <input class="p-2 rounded font-pixel border border-graphite focus:border-entropy" type="text" placeholder="Username" value={user} onInput={e => setUser(e.target.value)} required aria-label="Username" />
+              <input class="p-2 rounded font-pixel border border-graphite focus:border-entropy" type="password" placeholder="Password" value={pass} onInput={e => setPass(e.target.value)} required aria-label="Password" />
+              <button class="glass p-2 rounded font-pixel bg-entropy text-beige hover:bg-amber hover:text-graphite border border-entropy hover:glow" type="submit">Login</button>
+              {error && <div class="text-entropy font-elegant">{error}</div>}
+            </form>
+          </div>
+        </div>
+      )}
     </nav>
   );
 } 

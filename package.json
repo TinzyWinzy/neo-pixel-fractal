@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "start": "node server.js"
   },
   "alias": {
     "react": "preact/compat",
@@ -27,6 +28,7 @@
     "preact": "^10.26.8",
     "wouter": "^3.7.1",
     "express": "^4.19.2",
-    "body-parser": "^1.20.2"
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5"
   }
 }

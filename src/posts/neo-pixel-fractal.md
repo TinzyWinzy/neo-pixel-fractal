@@ -8,6 +8,8 @@ date: "2024-06-11"
 description: "Explores my signature design logic—where pixel art, retro technology, fractal modularity, and entropy-aware systems converge into deliberate digital form."
 ---
 
+<!-- SacredGeometrySVG -->
+
 > “Pixel by pixel, pattern by pattern—we weave logic into light.”
 
 ## Introduction

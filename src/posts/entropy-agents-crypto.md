@@ -8,6 +8,8 @@ date: "2024-06-11"
 description: "My holonic Q-learning and hybrid AI strategies for building entropy-aware crypto trading agents—designed to sense volatility, adapt behavior, and survive the storm."
 ---
 
+<!-- SacredGeometrySVG -->
+
 > "Markets are turbulent, not chaotic. There's an order—if you design the agent to perceive it."
 
 ## Introduction

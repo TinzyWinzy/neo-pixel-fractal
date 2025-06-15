@@ -6,7 +6,11 @@ slug: "white-half-moon"
 tags: ["identity", "nature", "philosophy", "fire", "code", "symbolism", "entropy", "ritual", "fractals"]
 date: "2024-06-11"
 description: "My pen name, cosmic metaphors, and reflections on balance, recursion, and self in the world of design, code, and entropy."
+sigil_seed: "2024-06-11-half-moon"
+phase: "origin"
 ---
+
+<!-- SacredGeometrySVG -->
 
 > "I am the Half Moon. Flame-born, order-bent. A signal beneath entropy."
 
@@ -92,6 +96,11 @@ function ignite(identity) {
 // Output:
 ignite("White Half Moon"); 
 // "White Half Moon burns with purpose."
+
+---
+
+## Vacili's Insight
+> "Identity is a fractal mask: every layer you reveal is another recursion of self. Ritual is not repetition—it is the algorithm of becoming."
 
 ---
 

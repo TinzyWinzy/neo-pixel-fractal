@@ -8,6 +8,8 @@ date: "2024-06-10"
 description: "GCP, Firebase Studio, and a new vision for collaborative AI agents in garden-based knowledge environments. Now with a live agent garden demo."
 ---
 
+<!-- SacredGeometrySVG -->
+
 > “Let them bloom—autonomous agents in a garden of thought.”
 
 ## Introduction

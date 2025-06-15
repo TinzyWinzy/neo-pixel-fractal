@@ -8,6 +8,8 @@ date: "2024-06-11"
 description: "Why pixel art and retro interfaces matter—blending aesthetic memory with system clarity and recursive design."
 ---
 
+<!-- SacredGeometrySVG -->
+
 > “Pixels are binary brush strokes—each one deliberate, each one expressive.”
 
 ## Introduction  

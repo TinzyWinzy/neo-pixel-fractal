@@ -314,7 +314,22 @@ const BlogPost = () => {
   }
   return (
     <div class="min-h-screen parallax-bg noise-bg flex flex-col items-center bg-beige text-graphite px-4 py-4 sm:px-8 sm:py-8">
-      <div class="my-6"><SacredGeometrySVG size={80} /></div>
+      <div class="my-6">
+        <SacredGeometrySVG
+          size={80}
+          type={
+            post.phase === 'origin' ? 'seed-of-life' :
+            post.tags?.includes('fractal') ? 'flower-of-life' :
+            post.tags?.includes('entropy') ? 'spiral' :
+            post.tags?.includes('agent') ? 'vesica-piscis' :
+            'seed-of-life'
+          }
+          colorPrimary={post.tags?.includes('entropy') ? '#7755aa' : '#0f4c5c'}
+          colorAccent={post.tags?.includes('ritual') ? '#fbbf24' : '#00b894'}
+          animate={post.tags?.includes('ritual') || post.tags?.includes('demo')}
+          phase={post.phase}
+        />
+      </div>
       <h2 class="text-3xl mt-2 mb-4 font-pixel text-mystic whisper">{post.title}</h2>
       <Reveal>
         <div class="mb-2 flex gap-2 flex-wrap">
@@ -373,17 +388,14 @@ const About = () => {
           <span class="section-header-underline"></span>
         </h2>
         <div class="flex justify-center my-10">
-          {/* Sacred Geometry SVG: Seed of Life motif */}
-          <svg viewBox="0 0 120 120" width="96" height="96" class="mx-auto drop-shadow-lg" style={{ shapeRendering: 'geometricPrecision' }} aria-label="Sacred Geometry Seed of Life" role="img" focusable="false" tabIndex="-1">
-            <circle cx="60" cy="30" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
-            <circle cx="60" cy="90" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
-            <circle cx="30" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
-            <circle cx="90" cy="60" r="28" fill="none" stroke="#0f4c5c" strokeWidth="2" />
-            <circle cx="42.4" cy="42.4" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
-            <circle cx="77.6" cy="42.4" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
-            <circle cx="42.4" cy="77.6" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
-            <circle cx="77.6" cy="77.6" r="28" fill="none" stroke="#fbbf24" strokeWidth="2" />
-          </svg>
+          <SacredGeometrySVG
+            size={96}
+            type={post?.phase === 'origin' ? 'seed-of-life' : post?.tags?.includes('fractal') ? 'flower-of-life' : 'seed-of-life'}
+            colorPrimary={'#0f4c5c'}
+            colorAccent={'#fbbf24'}
+            animate={post?.tags?.includes('ritual')}
+            phase={post?.phase}
+          />
         </div>
         {post && (
           <article class="glass p-6 rounded max-w-xl w-full font-elegant border-2 border-mystic prose prose-invert prose-sm overflow-x-auto space-y-8">
